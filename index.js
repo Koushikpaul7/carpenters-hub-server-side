@@ -62,7 +62,7 @@ async function run(){
             const result=await orderCollection.insertOne(order);
             res.send(result);
         })
-        //get orders from a user
+        //get orders from a user ...
         app.get('/order',verifyJWT,async(req,res)=>{
             const customer=req.query.customer;
            const decodedEmail=req.decoded.email;
