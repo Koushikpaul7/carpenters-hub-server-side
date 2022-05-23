@@ -63,7 +63,8 @@ async function run(){
                 $set: user
             };
             const result= await userCollection.updateOne(filter,updateDoc,options);
-            res.send(result);
+            const token=json.sign({email:email},process.env.ACCESS_TOKEN_SECRET,{expiresIn:'1d'})
+            res.send({result,token});
         })
 
 
