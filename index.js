@@ -19,7 +19,7 @@ async function run(){
         await client.connect();
         const productCollection= client.db('carpenter_hub').collection('products');
         const orderCollection= client.db('carpenter_hub').collection('orders');
-        const orderCollection= client.db('carpenter_hub').collection('orders');
+        const userCollection= client.db('carpenter_hub').collection('users');
 
         //all products
 
@@ -50,6 +50,19 @@ async function run(){
             const query={customer:customer};
             const orders=await orderCollection.find(query).toArray();
             res.send(orders);
+        })
+        //user
+
+        app.put('/user/:email',async(req,res)=>{
+            const email=req.params.email;
+            const user= req.body;
+            const filter={email:email};
+            const options={upsert:true};
+            const updateDoc={
+                $set: user
+            };
+            const result= await userCollection.updateOne(filter,updateDoc,options);
+            res.send(result);
         })
 
 
