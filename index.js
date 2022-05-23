@@ -97,7 +97,7 @@ async function run(){
 
 
 
-        //admin
+        //admin manage
 
 
         app.put('/user/:admin/:email',verifyJWT,async(req,res)=>{
