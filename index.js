@@ -19,6 +19,7 @@ async function run(){
         await client.connect();
         const productCollection= client.db('carpenter_hub').collection('products');
         const orderCollection= client.db('carpenter_hub').collection('orders');
+        const orderCollection= client.db('carpenter_hub').collection('orders');
 
         //all products
 
@@ -44,7 +45,7 @@ async function run(){
             res.send(result);
         })
         //get orders from a user
-        app.get('/booking',async(req,res)=>{
+        app.get('/order',async(req,res)=>{
             const customer=req.query.customer;
             const query={customer:customer};
             const orders=await orderCollection.find(query).toArray();
