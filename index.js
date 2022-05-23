@@ -43,7 +43,13 @@ async function run(){
             const result=await orderCollection.insertOne(order);
             res.send(result);
         })
-
+        //get orders from a user
+        app.get('/booking',async(req,res)=>{
+            const customer=req.query.customer;
+            const query={customer:customer};
+            const orders=await orderCollection.find(query).toArray();
+            res.send(orders);
+        })
 
 
     }
