@@ -50,6 +50,15 @@ async function run(){
             res.send(products);
 
         })
+
+
+        app.get('/review',async(req,res)=>{
+            const query={};
+            const cursor=reviewCollection.find(query);
+            const reviews=await cursor.toArray();
+            res.send(reviews);
+
+        })
         // per product
         app.get('/product/:id',async(req,res)=>{
             const id= req.params.id;
@@ -73,6 +82,14 @@ async function run(){
         app.post('/product',async(req,res)=>{
             const newProduct=req.body;
             const result=await productCollection.insertOne(newProduct);
+            res.send(result);
+        });
+
+        //post review
+
+        app.post('/review',async(req,res)=>{
+            const newReview=req.body;
+            const result=await reviewCollection.insertOne(newReview);
             res.send(result);
         });
 
