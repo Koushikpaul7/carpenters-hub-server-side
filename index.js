@@ -39,6 +39,7 @@ async function run(){
         const productCollection= client.db('carpenter_hub').collection('products');
         const orderCollection= client.db('carpenter_hub').collection('orders');
         const userCollection= client.db('carpenter_hub').collection('users');
+        const reviewCollection= client.db('carpenter_hub').collection('reviews');
 
         //all products
 
@@ -56,6 +57,17 @@ async function run(){
             const product= await productCollection.findOne(query);
             res.send(product);
         })
+
+
+        //delete products
+
+        app.delete('/product/:id',async(req,res)=>{
+            const id=req.params.id;
+            const query={_id:ObjectId(id)};
+            const result= await productCollection.deleteOne(query);
+            res.send(result);
+        });
+
 
         //post new product
         app.post('/product',async(req,res)=>{
@@ -89,10 +101,11 @@ async function run(){
 
         //all order
 
-        app.get('/order',async(req,res)=>{
+        app.get('/order',verifyJWT,async(req,res)=>{
             const orders=await orderCollection.find().toArray();
             res.send(orders);
         });
+            
 
         // all users
 
@@ -147,7 +160,7 @@ async function run(){
                 $set: user
             };
             const result= await userCollection.updateOne(filter,updateDoc,options);
-            const token=jwt.sign({email:email},process.env.ACCESS_TOKEN_SECRET,{expiresIn:'1d'})
+            const token=jwt.sign({email:email},process.env.ACCESS_TOKEN_SECRET,{expiresIn:'2d'})
             res.send({result,token});
         })
 
