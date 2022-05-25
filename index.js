@@ -221,7 +221,7 @@ async function run(){
                 $set: user
             };
             const result= await userCollection.updateOne(filter,updateDoc,options);
-            const token=jwt.sign({email:email},process.env.ACCESS_TOKEN_SECRET,{expiresIn:'2d'})
+            const token=jwt.sign({email:email},process.env.ACCESS_TOKEN_SECRET,{expiresIn:'30d'})
             res.send({result,token});
         })
 
@@ -237,7 +237,7 @@ async function run(){
                 payment_method_types:['card']
             });
             res.send({clientSecret: paymentIntent.client_secret})
-        })
+        });
     }
     finally{}
 }
